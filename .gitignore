@@ -1,0 +1,23 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Local environment files which may contain secrets
+.env
+
+# Virtual environments
+.venv/
+
+# Poetry files
+# It's recommended to commit poetry.lock for applications to ensure consistent dependencies.
+# poetry.lock
+
+# IDE settings
+.vscode/
+.idea/
+
+# Test reports
+.coverage
+htmlcov/
