@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from awesomeapp.config import settings
 from awesomeapp.database import engine
 from awesomeapp.models import Base
+from awesomeapp.system_routes import system_router
 from awesomeapp.routes import router
 from contextlib import asynccontextmanager
 import logging
@@ -25,5 +26,9 @@ async def on_startup():
         await conn.run_sync(Base.metadata.create_all)
 
 
-# Include routes
+# Include routers
+# System/infrastructure routes (health checks, root, etc.)
+app.include_router(system_router)
+
+# Business logic routes
 app.include_router(router)

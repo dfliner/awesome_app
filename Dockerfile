@@ -41,6 +41,11 @@ ENV PYTHONPATH="/app/src:${PYTHONPATH}" \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
     PYTHONUNBUFFERED=1
 
+# Install curl for health checks
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y curl \
+    && rm -rf /var/lib/apt/lists/*
+
 # Set working directory
 WORKDIR /app
 
@@ -48,8 +53,11 @@ WORKDIR /app
 COPY --from=builder /usr/local /usr/local
 COPY --from=builder /app/src ./src
 
-# Copy actual source code
-COPY .env .env
+# Note: .env is NOT copied into the image for security reasons.
+# Environment variables should be provided at runtime via:
+# - docker run -e or --env-file
+# - docker-compose environment or env_file
+# - Kubernetes ConfigMaps/Secrets
 
 EXPOSE 8000
 CMD ["uvicorn", "awesomeapp.main:app", "--host", "0.0.0.0", "--port", "8000"]

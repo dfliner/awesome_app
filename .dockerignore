@@ -1,0 +1,74 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv
+venv
+ENV
+env
+
+# Build / Distribution / Packaging
+build/
+dist/
+wheels/
+*.egg
+*.egg-info
+
+# Environment files
+# .env
+.env.*
+pip-log.txt
+pip-delete-this-directory.txt
+
+# IDE & Editor
+.vscode
+.idea
+.DS_Store
+
+# DevContainer
+.devcontainer
+
+# Testing & Coverage
+.pytest_cache
+.coverage
+htmlcov
+coverage.xml
+nosetests.xml
+
+# Linting & Type checking
+.mypy_cache
+.ruff_cache
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# Docker
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Logs & Databases (local dev)
+*.log
+*.db
+*.sqlite
+*.sqlite3
+
+# CI/CD
+.github
+.gitlab-ci.yml
+
+# Poetry
+poetry.toml
+
+# Misc
+.editorconfig

@@ -1,29 +1,55 @@
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the
-// README at: https://github.com/devcontainers/templates/tree/main/src/python
+// For format details, see https://aka.ms/devcontainer.json.
+// For config options, see the README at:
+// https://github.com/devcontainers/templates/tree/main/src/python
+// https://github.com/devcontainers/images/blob/main/src/python/README.md
 {
-	"name": "Python 3",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/python:1-3.12-bullseye",
-	"features": {
-		// Install poetry from the dev container feature 
-		"ghcr.io/devcontainers-extra/features/poetry:2": {}
-	},
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"tamasfe.even-better-toml",
-				"njpwerner.autodocstring",
-				"charliermarsh.ruff"
-			]
-		}
-	}
+  "name": "Python 3",
+  // Or use a Dockerfile or Docker Compose file.
+  // More info: https://containers.dev/guide/dockerfile
+  "image": "mcr.microsoft.com/devcontainers/python:1-3.12-bullseye",
+  // Use 'postCreateCommand' to run commands after the container is created.
+  "postCreateCommand": "curl -sSL https://install.python-poetry.org | python3 - && echo 'export PATH=\"$HOME/.local/bin:$PATH\"' >> ~/.bashrc",
 
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "pip3 install --user -r requirements.txt",
-
-	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "tamasfe.even-better-toml",
+        "njpwerner.autodocstring",
+        "charliermarsh.ruff",
+        "Anthropic.claude-code",
+        "EditorConfig.EditorConfig",
+        "streetsidesoftware.code-spell-checker",
+        "esbenp.prettier-vscode"
+      ],
+      "settings": {
+        "http.proxyStrictSSL": false,
+        "http.systemCertificates": false,
+        "http.useLocalProxyConfiguration": true,
+        "remote.downloadExtensionsLocally": true,
+        "editor.rulers": [
+          80,
+          100
+        ]
+      }
+    }
+  },
+  "remoteEnv": {
+    "ANTHROPIC_BASE_URL": "https://litellm.leap.blueorigin.com",
+    "ANTHROPIC_AUTH_TOKEN": "${localEnv:ANTHROPIC_AUTH_TOKEN}",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "us.anthropic.claude-opus-4-20250514-v1:0",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "us.anthropic.claude-sonnet-4-5-20250929-v1:0",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "anthropic.claude-3-5-haiku-20241022-v1:0",
+    "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "32000",
+    "MAX_THINKING_TOKENS": "1024",
+    "NODE_EXTRA_CA_CERTS": "/workspace/.ssl/blue-bundle.pem",
+    "SSL_CERT_FILE": "/workspace/.ssl/blue-bundle.pem",
+    "CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS": "1"
+  },
+  "mounts": [
+    "source=${localEnv:USERPROFILE}/.ssl,target=/workspace/.ssl,type=bind,readonly"
+  ]
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // "forwardPorts": []
+  // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+  // "remoteUser": "root"
 }
